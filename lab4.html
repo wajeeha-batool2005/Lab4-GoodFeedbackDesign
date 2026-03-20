@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab_04</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+        }
+
+        /* AFFORDANCE - Blue border */
+        #actionBtn {
+            padding: 10px 20px;
+            border: 3px solid #007bff;
+            /* Blue */
+            background: white;
+            cursor: pointer;
+        }
+
+        /* MAPPING - Green border */
+        #status {
+            margin-top: 10px;
+            border: 3px solid #28a745;
+            /* Green */
+            padding: 10px;
+            min-height: 20px;
+        }
+
+        /* FEEDBACK - Yellow background on click */
+        .click-feedback {
+            background-color: #ffc107 !important;
+            /* Yellow */
+            transform: scale(0.95);
+        }
+
+        /* CONSTRAINT - Red border when disabled */
+        .constrained {
+            border-color: #dc3545 !important;
+            /* Red */
+        }
+
+        /* SIGNIFIER - Purple background when disabled */
+        .disabled-signifier {
+            background-color: #6f42c1 !important;
+            /* Purple */
+            color: white;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>HCI Principles Demo (Colored for Visibility)</h3>
+
+    <button id="actionBtn" onclick="performAction()">
+        Process Data (Click me!)
+    </button>
+
+    <div id="status">Status will appear here</div>
+
+    <script>
+        let count = 0;
+        const btn = document.getElementById('actionBtn');
+        const status = document.getElementById('status');
+
+        function performAction() {
+            count++;
+
+            // FEEDBACK: Add yellow click effect
+            btn.classList.add('click-feedback');
+            setTimeout(() => btn.classList.remove('click-feedback'), 2000);
+
+            // Update status with count
+            status.textContent = `✅ Processed ${count} time${count !== 1 ? 's' : ''} (${2-count} count left)`;
+
+            // CONSTRAINT & SIGNIFIER: Apply at limit
+            if (count > 2) {
+                btn.disabled = true;
+                btn.classList.add('constrained', 'disabled-signifier');
+                status.textContent = '⛔ Limit reached (2 clicks max)';
+                status.style.borderColor = '#dc3545'; // Red for constraint
+            }
+        }
+    </script>
+</body>
+
+</html>
